@@ -1,14 +1,15 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  const res = await fetch("https://crazytime.p.rapidapi.com/stat", {
+  const res = await fetch('https://crazytime.p.rapidapi.com/stat', {
     headers: {
-      "x-rapidapi-key": process.env.RAPIDAPI_KEY!,
-      "x-rapidapi-host": "crazytime.p.rapidapi.com"
-    }
+      'x-rapidapi-key': process.env.RAPIDAPI_KEY!,
+      'x-rapidapi-host': 'crazytime.p.rapidapi.com',
+    },
   });
-  const data = await res.json();
 
-  // здесь можно сохранить в базу (Supabase/Neon)
+  if (!res.ok) return NextResponse.json({ error: 'Failed to fetch' }, { status: 500 });
+
+  const data = await res.json();
   return NextResponse.json(data);
 }
